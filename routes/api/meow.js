@@ -83,6 +83,30 @@ router.post("/new", async (req, res) => {
     }
 })
 
+router.put("/like", async (req, res) => {
+
+    try {
+        let like = 1
+
+        let meowid = req.body.meowid
+        if (!meowid) return res.status(400).send({ message: "Invalid meowid" })
+
+        let meow = await Meow.findById(meowid)
+        if (!meow) return res.status(400).send({ message: "Meow Does not Exist" })
+
+        like = req.body.like !== undefined ? req.body.like : like
+
+        meow = await Meow.findByIdAndUpdate(meowid, { $inc: { likes: like } })
+
+        res.sendStatus(204)
+
+    } catch (err) {
+        res.status(500).send({ message: "Unable to Like Meow 😖" })
+        console.log(err)        
+    }
+
+})
+
 function hasProfane(string) {
     let elements = string.split(" ")
     for (let i = 0; i < elements.length; i++) {

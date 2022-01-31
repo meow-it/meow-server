@@ -14,17 +14,17 @@ router.get("/", (_, res) => {
 router.post("/all", async (req, res) => {
 	
     try {
-        let latitute = parseFloat(req.body.latitute)
+        let latitude = parseFloat(req.body.latitude)
         let longitude = parseFloat(req.body.longitude)
 
-        if (!latitute || !longitude) return res.status(400).send({ message: "Invalid coordinates" })
+        if (!latitude || !longitude) return res.status(400).send({ message: "Invalid coordinates" })
 
         let meows = await Meow.find({
             location: {
                 $near: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [longitude, latitute]
+                        coordinates: [longitude, latitude]
                     },
                     $maxDistance: 1000
                 }

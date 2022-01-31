@@ -11,7 +11,7 @@ router.get("/", (_, res) => {
 	res.send({ message: "meow meow" })
 })
 
-router.post("/register", async (_, res) => {
+router.post("/", async (_, res) => {
 	try {
         
         let name = `${animals[Math.floor(Math.random() * animals.length)]} Chan`

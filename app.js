@@ -4,6 +4,7 @@ dotenv.config()
 const express = require("express")
 const app = express()
 const cors = require("cors")
+const mongoose = require("./database")
 const port = process.env.PORT || 3003
 
 app.listen(port, () => {

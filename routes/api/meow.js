@@ -11,7 +11,7 @@ router.get("/", (_, res) => {
 	res.send({ message: "meow meow" })
 })
 
-router.post("/all", async (_, res) => {
+router.post("/all", async (req, res) => {
 	
     try {
         let latitute = parseFloat(req.body.latitute)

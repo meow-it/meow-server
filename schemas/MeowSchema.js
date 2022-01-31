@@ -5,7 +5,8 @@ const MeowSchema = new Schema({
     likes: { type: Number, default: 0 },
     toxic: { type: Boolean, default: false },
     location: { type: { type: String, default: 'Point' }, coordinates: [Number] },
-    meowedBy: { type: Schema.Types.ObjectId, ref: "User" },
+    name: { type: String, default: "" },
+    profilePic: { type: String, default: "" },
     
 });
 let Meow = mongoose.model('Meow', MeowSchema)

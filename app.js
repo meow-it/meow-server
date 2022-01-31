@@ -22,6 +22,11 @@ app.options("*", cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// API Routes
+const registerAPI = require("./routes/api/register")
+
+app.use("/api/register", registerAPI)
+
 app.get("/", (_, res) => {
 	res.status(200).send({ text: "Hello World!"})
 })

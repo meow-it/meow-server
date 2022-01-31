@@ -1,0 +1,25 @@
+{
+  "name": "meow-server",
+  "version": "1.0.0",
+  "description": "Backend server of the Meow It - API Endpoints, Machine Learning, etc",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meow-it/meow-server.git"
+  },
+  "keywords": [
+    "meow",
+    "meow-server",
+    "backend",
+    "meow-it",
+    "meow it"
+  ],
+  "author": "tharunoptimus",
+  "bugs": {
+    "url": "https://github.com/meow-it/meow-server/issues"
+  },
+  "homepage": "https://github.com/meow-it/meow-server#readme"
+}

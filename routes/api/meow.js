@@ -27,7 +27,7 @@ router.post("/all", async (req, res) => {
                         type: "Point",
                         coordinates: [longitude, latitude]
                     },
-                    $maxDistance: 1000
+                    $maxDistance: 5000
                 }
             }
         })

@@ -88,6 +88,9 @@ router.put("/like", async (req, res) => {
     try {
         let like = 1
 
+        let userid = req.body.userid
+        if (!userid) return res.status(400).send({ message: "Invalid userid" })
+
         let meowid = req.body.meowid
         if (!meowid) return res.status(400).send({ message: "Invalid meowid" })
 
@@ -95,10 +98,14 @@ router.put("/like", async (req, res) => {
         if (!meow) return res.status(400).send({ message: "Meow Does not Exist" })
 
         like = req.body.like !== undefined ? req.body.like : like
+        
+        res.sendStatus(202)
 
-        meow = await Meow.findByIdAndUpdate(meowid, { $inc: { likes: like } })
+        await Meow.findByIdAndUpdate(meowid, {
+            $inc: { likes: like },
+            $addToSet: { likedBy: userid }
+        })
 
-        res.sendStatus(204)
 
     } catch (err) {
         res.status(500).send({ message: "Unable to Like Meow 😖" })

@@ -95,10 +95,10 @@ router.put("/like", async (req, res) => {
         let like = 1
 
         let userid = req.body.userid
-        if (!userid) return res.status(400).send({ message: "Invalid userid" })
+        if (!userid) return res.status(400).send({ message: "Does not have an userid" })
 
         let meowid = req.body.meowid
-        if (!meowid) return res.status(400).send({ message: "Invalid meowid" })
+        if (!meowid) return res.status(400).send({ message: "Does not have a meowid" })
 
         let meow = await Meow.findById(meowid)
         if (!meow) return res.status(400).send({ message: "Meow Does not Exist" })
@@ -126,6 +126,60 @@ router.put("/like", async (req, res) => {
     }
 
 })
+
+router.put("/review", async (req, res) => {
+
+    try {
+
+        let userid = req.body.userid
+        if (!userid) return res.status(400).send({ message: "Does not have an userid" })
+
+        let meowid = req.body.meowid
+        if (!meowid) return res.status(400).send({ message: "Does not have a meowid" })
+
+        let meow = await Meow.findById(meowid)
+        if (!meow) return res.status(400).send({ message: "Meow Does not Exist" })
+
+        if(meow.toxic) return res.status(400).send({ message: "Meow is already labeled as TOXIC 😕" })
+
+        if (meow.isReviewed) return res.status(400).send({ message: "Meow has already been sent for review 😒" })
+
+        res.status(202).send({ message: "The Meow has been sent for review" })
+
+        await Meow.findByIdAndUpdate(meowid, {
+            $set: {
+                isReviewed: true
+            }
+        })
+        
+        // TODO: Handle Review with the Toxic API 
+        // Instead: Checking the text again for profane words
+
+        if(deepSearchForProfane(meow.text)) {
+            await Meow.findByIdAndUpdate(meowid, {
+                $set: {
+                    toxic: true
+                }
+            })
+        }
+
+
+    } catch (err) {
+        res.status(500).send({ message: "Unable to Like Meow 😖" })
+        console.log(err)        
+    }
+
+})
+
+function deepSearchForProfane(string) {
+    stuff.forEach(e => {
+        if (string.includes(e)) {
+            return true
+        }
+    })
+
+    return false
+}
 
 function hasProfane(string) {
     let elements = string.split(" ")

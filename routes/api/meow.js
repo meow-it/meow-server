@@ -12,6 +12,17 @@ router.get("/", (_, res) => {
 	res.send({ message: "meow meow" })
 })
 
+router.get("/:id", async (req, res) => {
+    try {
+        let meow = await Meow.findById(req.params.id)
+        if (!meow) return res.status(404).send({ message: "Meow with ID does not exist 🙁" })
+        res.status(200).send(meow)
+    } catch (err) {
+        res.status(400).send({ message: "Unable to query for some reason 😟" })
+        console.log(err)
+    }
+})
+
 router.post("/all", async (req, res) => {
 	
     try {
@@ -30,7 +41,7 @@ router.post("/all", async (req, res) => {
                     $maxDistance: 5000
                 }
             }
-        })
+        }).sort({ createdAt: -1 })
 
         res.status(200).send(meows)
 

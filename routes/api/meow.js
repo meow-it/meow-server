@@ -98,12 +98,14 @@ router.put("/like", async (req, res) => {
         if (!meow) return res.status(400).send({ message: "Meow Does not Exist" })
 
         like = req.body.like !== undefined ? req.body.like : like
+
+        let option = like ? "$addToSet" : "$pull"
         
         res.sendStatus(202)
 
         await Meow.findByIdAndUpdate(meowid, {
             $inc: { likes: like },
-            $addToSet: { likedBy: userid }
+            [option]: { likedBy: userid }
         })
 
 

@@ -76,6 +76,12 @@ router.post("/new", async (req, res) => {
 
         res.status(201).send(meow)
 
+        await User.findByIdAndUpdate(userid, {
+            $push: {
+                meows: meow._id
+            }
+        })
+
         
     } catch (err) {
         res.status(500).send({ message: "Unable to Create New Meow 😖" })

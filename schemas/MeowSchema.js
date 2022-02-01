@@ -8,7 +8,8 @@ const MeowSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     name: { type: String, default: "" },
     profilePic: { type: String, default: "" },
-    likedBy: [{ type: Schema.Types.ObjectId, ref: "User" }]
+    likedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    isReviewed: { type: Boolean, default: false }
     
 });
 

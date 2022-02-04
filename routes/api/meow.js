@@ -183,11 +183,10 @@ router.put("/review", async (req, res) => {
 })
 
 function deepSearchForProfane(string) {
-    stuff.forEach(e => {
-        if (string.includes(e)) {
-            return true
-        }
-    })
+
+    for (let i = 0; i < stuff.length; i++) {
+        if (string.toLowerCase().includes(stuff[i])) return true
+    }
 
     return false
 }

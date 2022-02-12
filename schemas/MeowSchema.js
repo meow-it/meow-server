@@ -11,6 +11,7 @@ const MeowSchema = new Schema({
     likedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
     isReviewed: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now, index: { expireAfterSeconds: secondsToLive } },
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
 });
 
 MeowSchema.index({ location: '2dsphere' });

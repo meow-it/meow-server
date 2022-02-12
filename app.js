@@ -25,9 +25,11 @@ app.use(express.urlencoded({ extended: true }))
 // API Routes
 const registerAPI = require("./routes/api/register")
 const meowAPI = require("./routes/api/meow")
+const commentAPI = require("./routes/api/comment")
 
 app.use("/api/register", registerAPI)
 app.use("/api/meow", meowAPI)
+app.use("/api/comment", commentAPI)
 
 app.get("/", (_, res) => {
 	res.status(200).send({ text: "Hello World!"})

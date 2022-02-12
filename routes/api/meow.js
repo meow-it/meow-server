@@ -103,18 +103,21 @@ router.post("/new", async (req, res) => {
 router.put("/like", async (req, res) => {
 
     try {
-        let like = 1
 
-        let userid = req.body.userid
+        let { meowid, userid } = req.body
+
         if (!userid) return res.status(400).send({ message: "Does not have an userid" })
+        let user = await User.findById(userid)
+        if (!user) return res.status(400).send({ message: "User Does not Exist 😡" })
 
-        let meowid = req.body.meowid
         if (!meowid) return res.status(400).send({ message: "Does not have a meowid" })
 
         let meow = await Meow.findById(meowid)
         if (!meow) return res.status(400).send({ message: "Meow Does not Exist" })
 
-        like = req.body.like !== undefined ? req.body.like : like
+        let likedBy = meow.likedBy
+
+        let like = likedBy.includes(userid) ? -1 : 1
 
         res.sendStatus(202)
 

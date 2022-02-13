@@ -133,6 +133,7 @@ router.put("/like", async (req, res) => {
             })
         }
 
+        res.status(204).send()
 
     } catch (err) {
         res.status(500).send({ message: "Unable to Like Meow 😖" })

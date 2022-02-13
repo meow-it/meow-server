@@ -43,6 +43,7 @@ router.post("/new", async (req, res) => {
         if (!user) return res.status(404).send({ message: "User with ID not found 🙁" })
 
         if (!text) return res.status(400).send({ message: "Comment Text cannot be null 😦" })
+        text = text.substring(0, 140)
 
         let toxic = hasProfane(text)
         let name = user.name

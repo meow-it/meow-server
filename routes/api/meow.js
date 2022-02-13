@@ -62,6 +62,7 @@ router.post("/new", async (req, res) => {
 
         let text = req.body.text
         if (!text) return res.status(400).send({ message: "Text Cannot be Null" })
+        text = text.substring(0, 280)
 
         let toxic = hasProfane(text)
         let name = user.name

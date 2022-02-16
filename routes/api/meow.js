@@ -120,7 +120,7 @@ router.put("/like", async (req, res) => {
 
         let like = likedBy.includes(userid) ? -1 : 1
 
-        res.sendStatus(202)
+        res.status(202).send({ "message": "Request Successful", "like": like, "status": true })
 
         if(like == 1) {
             await Meow.findByIdAndUpdate(meowid, {
@@ -133,8 +133,6 @@ router.put("/like", async (req, res) => {
                 $pull: { likedBy: userid }
             })
         }
-
-        res.status(204).send()
 
     } catch (err) {
         res.status(500).send({ message: "Unable to Like Meow 😖" })

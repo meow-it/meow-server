@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meow-it/meow-server.git"
@@ -23,7 +24,6 @@
   },
   "homepage": "https://github.com/meow-it/meow-server#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
     "mongodb": "^4.3.1",

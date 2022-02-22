@@ -26,11 +26,10 @@ router.post("/", async (_, res) => {
 	}
 })
 
-router.delete("/", async (req, res) => {
+router.delete("/:id", async (req, res) => {
 	try {
-		let id = req.body.userId
+		let id = req.params.id
 		if (!id) return res.status(400).send({ message: "Invalid userid" })
-
 		let user = await User.findByIdAndDelete(id)
 		if (!user) return res.status(404).send({ message: "User with ID does not exist 🙁" })
 

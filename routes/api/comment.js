@@ -40,7 +40,7 @@ router.post("/new", async (req, res) => {
         if (!meow) return res.status(404).send({ message: "Meow with ID not found 🙁" })
 
         let user = await User.findById(userId)
-        if (!user) return res.status(404).send({ message: "User with ID not found 🙁" })
+        if (!user) return res.status(404).send({ status: false, message: "User with ID not found 🙁" })
 
         if (!text) return res.status(400).send({ message: "Comment Text cannot be null 😦" })
         text = text.substring(0, 140)

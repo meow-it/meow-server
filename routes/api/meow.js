@@ -58,7 +58,7 @@ router.post("/new", async (req, res) => {
         if (!userid) return res.status(400).send({ message: "Invalid userid" })
 
         let user = await User.findById(userid)
-        if (!user) return res.status(400).send({ message: "User Does not Exist" })
+        if (!user) return res.status(400).send({ status: false, message: "User Does not Exist" })
 
         let text = req.body.text
         if (!text) return res.status(400).send({ message: "Text Cannot be Null" })

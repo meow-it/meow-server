@@ -26,4 +26,19 @@ router.post("/", async (_, res) => {
 	}
 })
 
+router.delete("/", async (req, res) => {
+	try {
+		let id = req.body.userId
+		if (!id) return res.status(400).send({ message: "Invalid userid" })
+
+		let user = await User.findByIdAndDelete(id)
+		if (!user) return res.status(404).send({ message: "User with ID does not exist 🙁" })
+
+		res.status(200).send({ status: true, message: "User deleted successfully 😭💔" })
+	} catch (err) {
+		console.log(`Something went wrong 😟 ${err}`)
+		res.status(500).send({ message: "Something went wrong 😟" })
+	}
+})
+
 module.exports = router

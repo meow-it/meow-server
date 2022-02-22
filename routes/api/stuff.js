@@ -1422,6 +1422,7 @@ let stuff = [
 	"kigger",
 	"kike",
 	"kikes",
+	"kill",
 	"killer",
 	"kills",
 	"kimchis",

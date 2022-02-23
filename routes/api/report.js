@@ -45,3 +45,15 @@ async function incrementFlagCountToContent(id, type, consernedId) {
     }
 }
 
+async function deleteContent(id, type) {
+    try {
+        if(type == "meow") {
+            await Meow.findByIdAndDelete(id)
+        } else if (type == "comment") {
+            await Comment.findByIdAndDelete(id)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+

@@ -3,6 +3,7 @@ const app = express()
 const router = express.Router()
 const animals = require("./animals")
 const User = require("../../schemas/UserSchema")
+const Fingerprint = require("../../schemas/FingerprintSchema")
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -11,13 +12,18 @@ router.get("/", (_, res) => {
 	res.send({ message: "meow meow" })
 })
 
-router.post("/", async (_, res) => {
+router.post("/", async (req, res) => {
 	try {
-        
+        let fingerprint = req.body.fingerprint
+		if (!fingerprint) return res.status(400).send({ message: "Invalid fingerprint" })
+
+		let fingerInDb = await Fingerprint.findOne({ number: fingerprint })
+		if (fingerInDb != null) return res.status(400).send({status: "banned"})
+
         let name = `${animals[Math.floor(Math.random() * animals.length)]} Chan`
         let profilePic = `https://avatars.dicebear.com/api/bottts/${name.replace(/\s/g, "")}.svg`
 
-        let user = await User.create({ name, profilePic })
+        let user = await User.create({ name, profilePic, fingerprint })
         res.status(201).send(user)
 
 	} catch (err) {

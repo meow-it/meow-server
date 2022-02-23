@@ -13,6 +13,17 @@ router.get("/", (_, res) => {
 	res.send({ message: "Comments API Online" })
 })
 
+router.get("/single/:id", async (req, res) => {
+    try {
+        let comment = await Comment.findById(req.params.id)
+        if (!comment) return res.status(404).send({ message: "Comment with ID does not exist 🙁" })
+        res.status(200).send(comment)
+    } catch (err) {
+        res.status(400).send({ message: "Unable to query for some reason 😟" })
+        console.log(err)
+    }
+})
+
 router.get("/:id", async (req, res) => {
 	
     try {
@@ -49,7 +60,7 @@ router.post("/new", async (req, res) => {
         let name = user.name
         let profilePic = user.profilePic
 
-        let comment = await Comment.create({ text, toxic, name, profilePic, commentedTo: meowId, commentedBy: userId })
+        let comment = await Comment.create({ text, toxic, name, profilePic, commentedTo: meowId, madeBy: userId })
         res.status(201).send(comment)
 
         await Meow.findByIdAndUpdate(meowId, { $push: { comments: comment._id } })

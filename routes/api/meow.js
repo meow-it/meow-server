@@ -84,7 +84,7 @@ router.post("/new", async (req, res) => {
             location,
             name,
             profilePic,
-            createdBy: userid
+            madeBy: userid
         })
 
         res.status(201).send(meow)

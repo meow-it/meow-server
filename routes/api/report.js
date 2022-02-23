@@ -40,8 +40,9 @@ router.post("/", async (req, res) => {
         
         if (user == null) return "User already got deleted"
         
+        let numberOfReportsAllowed = 2
         
-        if(content.flaggedBy.length + 1 > 2) {
+        if(content.flaggedBy.length + 1 > numberOfReportsAllowed) {
             await deleteContent(id, type)
             await addFingerprintAndDeleteUser(userId, user)
         }

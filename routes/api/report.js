@@ -57,3 +57,11 @@ async function deleteContent(id, type) {
     }
 }
 
+async function addFingerprintAndDeleteUser(userId, user) {
+    let fingerprintOfUser = user.fingerprint
+    await Fingerprint.create({number: fingerprintOfUser})
+    await User.findByIdAndDelete(userId)
+}
+
+
+module.exports = router

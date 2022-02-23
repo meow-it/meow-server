@@ -18,10 +18,12 @@ app.use(express.urlencoded({ extended: true }))
 const registerAPI = require("./routes/api/register")
 const meowAPI = require("./routes/api/meow")
 const commentAPI = require("./routes/api/comment")
+const reportAPI = require("./routes/api/report")
 
 app.use("/api/register", cors, registerAPI)
 app.use("/api/meow", cors, meowAPI)
 app.use("/api/comment", cors, commentAPI)
+app.use("/api/report", cors, reportAPI)
 
 app.get("/", (_, res) => {
 	res.status(200).send({ text: "Hello World!"})

@@ -49,7 +49,7 @@ router.post("/new", async (req, res) => {
         let name = user.name
         let profilePic = user.profilePic
 
-        let comment = await Comment.create({ text, toxic, name, profilePic, commentedTo: meowId })
+        let comment = await Comment.create({ text, toxic, name, profilePic, commentedTo: meowId, commentedBy: userId })
         res.status(201).send(comment)
 
         await Meow.findByIdAndUpdate(meowId, { $push: { comments: comment._id } })

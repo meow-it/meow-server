@@ -83,7 +83,8 @@ router.post("/new", async (req, res) => {
             toxic,
             location,
             name,
-            profilePic
+            profilePic,
+            createdBy: userid
         })
 
         res.status(201).send(meow)

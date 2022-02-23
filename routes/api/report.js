@@ -29,3 +29,19 @@ async function getContent(id, type) {
     return content
 }
 
+async function incrementFlagCountToContent(id, type, consernedId) {
+    try {
+        if(type == "meow") {
+            await Meow.findByIdAndUpdate(id, 
+                { $addToSet: { flaggedBy: consernedId } }
+            )
+        } else if (type == "comment") {
+            await Comment.findByIdAndUpdate(id, { 
+                $addToSet: { flaggedBy: consernedId }
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+

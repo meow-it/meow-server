@@ -8,6 +8,7 @@ const CommentSchema = new Schema({
     profilePic: { type: String, default: "" },
     isReviewed: { type: Boolean, default: false },
     commentedTo: { type: Schema.Types.ObjectId, ref: "Meow" },
+    commentedBy: { type: Schema.Types.ObjectId, ref: "User" },
     createdAt: { type: Date, default: Date.now, index: { expireAfterSeconds: secondsToLive } }
 });
 

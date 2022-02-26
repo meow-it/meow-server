@@ -43,8 +43,16 @@ router.post("/", async (req, res) => {
         let numberOfReportsAllowed = 2
         
         if(content.flaggedBy.length + 1 > numberOfReportsAllowed) {
-            await deleteContent(id, type)
-            await addFingerprintAndDeleteUser(userId, user)
+            
+            await deleteContent(id, type) // delete content
+            // increment flaggedTimes of user
+            user = await updateFlaggedTimesCount(userId)
+            
+            // if user flaggedTimes is equal to numberOfReportsAllowed, add fingerprint and delete user
+            if(user.flaggedTimes > numberOfReportsAllowed) {
+                await addFingerprintAndDeleteUser(userId, user)
+            }
+
         }
         
         res.status(202).send({ message: "Content has been reported" })
@@ -102,6 +110,16 @@ async function addFingerprintAndDeleteUser(userId, user) {
     let fingerprintOfUser = user.fingerprint
     await Fingerprint.create({number: fingerprintOfUser})
     await User.findByIdAndDelete(userId)
+}
+
+async function updateFlaggedTimesCount(userId) {
+    let user = null
+    try {
+        user = await User.findByIdAndUpdate(userId, { $inc: { flaggedTimes: 1 } }, { new: true })
+    } catch (err) {
+        console.log(err)
+    }
+    return user
 }
 
 

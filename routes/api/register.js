@@ -13,23 +13,28 @@ router.get("/", (_, res) => {
 })
 
 router.post("/", async (req, res) => {
-	try {
+    try {
         let fingerprint = req.body.fingerprint
-		if (!fingerprint) return res.status(400).send({ message: "Invalid fingerprint" })
+        if (!fingerprint) return res.status(400).send({ message: "Invalid fingerprint" })
+        
+        let fingerInDb = await Fingerprint.findOne({ number: fingerprint })
+        if (fingerInDb != null) return res.status(400).send({status: "banned"})
 
-		let fingerInDb = await Fingerprint.findOne({ number: fingerprint })
-		if (fingerInDb != null) return res.status(400).send({status: "banned"})
+        let user = await User.findOne({ fingerprint })
+        if(user) return res.status(200).send(user)
 
-        let name = `${animals[Math.floor(Math.random() * animals.length)]} Chan`
-        let profilePic = `https://avatars.dicebear.com/api/bottts/${name.replace(/\s/g, "")}.svg`
+        if (!user) {
+            let name = `${animals[Math.floor(Math.random() * animals.length)]} Chan`
+            let profilePic = `https://avatars.dicebear.com/api/croodles/${name.replace(/\s/g, "")}.svg`
+            
+            let newUser = await User.create({ name, profilePic, fingerprint })
+            res.status(201).send(newUser)
+        }
 
-        let user = await User.create({ name, profilePic, fingerprint })
-        res.status(201).send(user)
-
-	} catch (err) {
-		res.status(200).send({ status: false })
-		console.log(err)
-	}
+    } catch (error) {
+        res.status(200).send({ status: false })
+        console.log(err)
+    }
 })
 
 router.delete("/:id", async (req, res) => {

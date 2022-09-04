@@ -38,9 +38,9 @@ router.post("/", async (req, res) => {
         let userId = content.madeBy
         let user = await User.findById(userId)
         
-        if (user == null) return "User already got deleted"
+        if (user == null) return res.status(202).send("User already got deleted or didn't exist")
         
-        let numberOfReportsAllowed = 2
+        let numberOfReportsAllowed = 3
         
         if(content.flaggedBy.length + 1 > numberOfReportsAllowed) {
             
@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
             user = await updateFlaggedTimesCount(userId)
             
             // if user flaggedTimes is equal to numberOfReportsAllowed, add fingerprint and delete user
-            if(user.flaggedTimes > numberOfReportsAllowed) {
+            if(user.flaggedTimes >= numberOfReportsAllowed) {
                 await addFingerprintAndDeleteUser(userId, user)
             }
 

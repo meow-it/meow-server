@@ -12,6 +12,13 @@ router.get("/", (_, res) => {
 	res.send({ message: "meow meow" })
 })
 
+router.get("/:id", async(req, res) => {
+    let id = req.params.id
+    let user = await User.findById(id)
+    if(user == null) return res.status(404).send({ message: "User not found" })
+    res.status(200).send(user)
+})
+
 router.post("/", async (req, res) => {
     try {
         let fingerprint = req.body.fingerprint

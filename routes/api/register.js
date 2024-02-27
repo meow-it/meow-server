@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
 
         if (!user) {
             let name = `${animals[Math.floor(Math.random() * animals.length)]} Chan`
-            let profilePic = `https://avatars.dicebear.com/api/adventurer-neutral/${name.replace(/\s/g, "")}.svg?backgroundColor=variant03`
+            let profilePic = `https://api.dicebear.com/7.x/thumbs/svg?seed=${name.replace(/\s/g, "")}`
             
             let newUser = await User.create({ name, profilePic, fingerprint })
             res.status(201).send(newUser)

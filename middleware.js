@@ -4,6 +4,7 @@ exports.cors = (req, res, next) => {
 		"http://localhost:3000",
 		"https://meowit.netlify.app",
 		"https://meowit.pages.dev",
+		"https://meowit.cybernode.dev"
 	]
 	let origin = req.headers.origin
 
